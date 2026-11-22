@@ -93,7 +93,7 @@ const message=`Chúc mừng sinh nhật Cô Giáo!
 
 Mong tuổi mới sẽ mang đến cho Cô thật nhiều bình yên, những nụ cười vô tư và những điều bất ngờ thật đẹp. Mong mọi ước mơ của Cô đều có nơi để bắt đầu, còn những ngày mệt mỏi thì luôn có một vòng tay để trở về.
 
-Cảm ơn Cô vì đã là một Cô Giáo — dịu dàng, rực rỡ và đặc biệt theo cách không ai thay thế được. Tháng 11 này, và cả những tháng 11 về sau, em vẫn muốn được gặp Cô để có những bữa nhậu ngồi với nhau.`;const ids=["intro","counterScreen","wish","memories"];const show=id=>ids.forEach(x=>document.getElementById(x).classList.toggle("active",x===id));document.querySelectorAll(".leaves").forEach(box=>{for(let i=0;i<18;i++){let x=document.createElement("span");x.className="leaf";x.textContent=["🍂","✦","🍁"][i%3];x.style.left=Math.random()*100+"%";x.style.animationDuration=8+Math.random()*10+"s";x.style.animationDelay=-Math.random()*13+"s";x.style.fontSize=16+Math.random()*22+"px";box.append(x)}});function type(){let t=document.getElementById("typed"),i=0;t.textContent="";let a=setInterval(()=>{t.textContent+=message[i++]||"";if(i>=message.length)clearInterval(a)},18)}document.getElementById("start").onclick=()=>{music.play().catch(()=>{});show("counterScreen");let n=10;count.textContent=n;let a=setInterval(()=>{count.textContent=--n||"♥";if(n<0){clearInterval(a);show("wish");type()}},850)};document.getElementById("memoriesButton").onclick=()=>show("memories");document.getElementById("restart").onclick=()=>show("intro");
+Cảm ơn Cô vì đã là một Cô Giáo — dịu dàng, rực rỡ và đặc biệt theo cách không ai thay thế được. Tháng 11 này, và cả những tháng 11 về sau, em vẫn muốn được gặp Cô để có những bữa nhậu ngồi với nhau.`;const ids=["intro","counterScreen","wish","memories"];const show=id=>{ids.forEach(x=>document.getElementById(x).classList.toggle("active",x===id));window.scrollTo(0,0)};document.querySelectorAll(".leaves").forEach(box=>{for(let i=0;i<18;i++){let x=document.createElement("span");x.className="leaf";x.textContent=["🍂","✦","🍁"][i%3];x.style.left=Math.random()*100+"%";x.style.animationDuration=8+Math.random()*10+"s";x.style.animationDelay=-Math.random()*13+"s";x.style.fontSize=16+Math.random()*22+"px";box.append(x)}});function type(){let t=document.getElementById("typed"),i=0;t.textContent="";let a=setInterval(()=>{t.textContent+=message[i++]||"";if(i>=message.length)clearInterval(a)},18)}document.getElementById("start").onclick=()=>{music.play().catch(()=>{});show("counterScreen");let n=10;count.textContent=n;let a=setInterval(()=>{count.textContent=--n||"♥";if(n<0){clearInterval(a);show("wish");type()}},850)};document.getElementById("memoriesButton").onclick=()=>show("memories");document.getElementById("restart").onclick=()=>show("intro");
 const birthdayTarget = new Date(2026, 10, 3, 0, 0, 0);
 const startButton = document.getElementById('start');
 const giftLock = document.getElementById('giftLock');
@@ -239,10 +239,31 @@ for (let i = 0; i < 16; i++) {
   balloonSky.appendChild(balloon);
 }</script><style>
 @media (max-width: 768px) {
-  #intro {
-    align-items: flex-start;
-    justify-content: center;
+  html, body {
+    height: auto;
+    min-height: 100%;
+  }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
     overflow-y: auto;
+  }
+  .screen {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    overflow-x: clip;
+  }
+
+  #intro {
+    align-items: center;
+    justify-content: center;
+    overflow-x: clip;
     padding: max(16px, env(safe-area-inset-top)) 0 max(20px, env(safe-area-inset-bottom));
   }
   #intro .intro.card {
@@ -264,14 +285,12 @@ for (let i = 0; i < 16; i++) {
   #counterScreen .cake-wrap { transform: translateY(55px); }
 
   #wish {
-    overflow-y: auto;
     padding: max(16px, env(safe-area-inset-top)) 0 max(16px, env(safe-area-inset-bottom));
   }
   #wish .message {
     flex-shrink: 0;
     width: min(92vw, 650px);
-    max-height: calc(100vh - 32px);
-    max-height: calc(100dvh - 32px);
+    max-height: none;
     padding: clamp(22px, 6vw, 34px) clamp(18px, 5vw, 30px);
   }
   #wish #typed { min-height: 0; }
@@ -279,7 +298,6 @@ for (let i = 0; i < 16; i++) {
   #memories {
     align-items: center;
     justify-content: flex-start;
-    overflow-y: auto;
     min-height: 100vh;
     min-height: 100dvh;
     padding: max(20px, env(safe-area-inset-top)) 16px max(76px, calc(60px + env(safe-area-inset-bottom)));
@@ -301,6 +319,32 @@ for (let i = 0; i < 16; i++) {
 @media (max-width: 768px) and (max-height: 500px) {
   #counterScreen .counter { transform: scale(.62); }
   #counterScreen .cake-wrap { transform: translateY(30px); }
+}
+@media (max-height: 620px) {
+  html, body { height: auto; min-height: 100%; }
+  body { min-height: 100vh; min-height: 100dvh; overflow-x: hidden; overflow-y: auto; }
+  .screen {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    overflow-x: clip;
+  }
+  #intro {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    overflow-x: clip;
+    padding: max(16px, env(safe-area-inset-top)) 0 max(20px, env(safe-area-inset-bottom));
+  }
+  #intro .intro.card { max-height: none; flex-shrink: 0; overflow: visible; }
+  #counterScreen .counter { transform: scale(.62); }
+  #counterScreen .cake-wrap { transform: translateY(30px); }
+  #wish .message { max-height: none; overflow: visible; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
